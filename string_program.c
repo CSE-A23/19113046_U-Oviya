@@ -7,7 +7,7 @@ main()
   int b,i;
   clrscr();
   printf("Enter the string\n");
-  scanf("%s",&a);
+  scanf("%s",a);
   b=strlen(a);
   if(b%2!=0)
   {
