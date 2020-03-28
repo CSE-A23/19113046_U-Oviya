@@ -1,45 +1,65 @@
-#include<conio.h>
-#include<iomanip>
+#include<stdio.h>
+#include<iostream>
 using namespace std;
-class mytime
+class MYTIME
 {
-  int hrs;
-  int mins;
-  int secs;
-  public:
-  void read();
-  void print();
-  mytime operator+(mytime t2);
+    public:
+      int hrs;
+      int min;
+      int sec;
+      friend MYTIME operator +(MYTIME a,MYTIME b);
+      void mtin()
+       {
+           cin>>hrs>>min>>sec;
+       }
+      void mtout()
+       {
+           cout<<"sum = "<<hrs<<" "<<min<<" "<<sec;
+       }
+      MYTIME()
+      {
+          hrs=0;
+          sec=0;
+          min=0;
+      }
+     void operator ++()
+      {
+          sec+=5;
+          min+=5;
+          hrs+=5;
+      }
 };
-void mytime::read()
+void tune(MYTIME &a)
 {
-  cout<<"\nEnter hour,minutes and seconds\n";
-  cin>>hrs>>mins>>secs;
+    if(a.sec>=60)
+    {
+        a.min+=(a.sec/60);
+        a.sec=a.sec%60;
+    }    
+    if(a.min>=60)
+    {
+        a.hrs+=(a.min/60);
+        a.min=a.min%60;
+    }
 }
-void mytime::print()
+MYTIME operator +(MYTIME a,MYTIME b)
 {
-  cout<<"\nTime is-> "<<setfill('0')<<setw(2)<<hrs;
-  cout<<":"<<setfill('0')<<setw(2)<<mins;
-  cout<<":"<<setfill('0')<<setw(2)<<secs<<endl;
+    MYTIME c;
+    c.sec=a.sec + b.sec;
+    tune(c);
+    c.min+=(a.min + b.min);
+    tune(c);
+    c.hrs+=(a.hrs + b.hrs);
+    return c;
 }
-mytime::operator+(time t2)
-{
-  time t;
-  t.hrs=hrs+t2.hrs;
-  t.mins=mins+t2.mins;
-  t.secs=secs+t2.secs;
-  return t;
-}
-void main()
-{
-  clrscr();
-  time t1,t2,t3;
-  t1.read();
-  t1.print();
-  t2.read();
-  t2.print();
-  t3=t1+t2;
-  cout<<"\nTime1+ Time2:\n";
-  t3.print();
-  getch();
+main()
+ {
+    MYTIME a,b,c;
+    a.mtin();
+    b.mtin();
+    c=a+b;
+    c.mtout();
+    ++b;
+    tune(b);
+    cout<<"\nIncrement of Time Object 2 = "<<b.hrs<<" "<<b.min<<" "<<b.sec;
 }
